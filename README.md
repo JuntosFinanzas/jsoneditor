@@ -1,3 +1,7 @@
+# Changes made for Juntos
+This is a quick and dirty change to allow creation of configruation files in JSON. Ideally we should package and use this as a library.
+The quick and dirty solution is in /examples/juntos.html. Git clone this project and open that html page in your browser.
+
 # JSON Editor
 
 JSON Editor is a web-based tool to view, edit, format, and validate JSON.
@@ -109,7 +113,7 @@ There is a directive available for using JSONEditor in Angular.js:
 
 ## Build
 
-The code of the JSON Editor is located in the folder `./src`. To build 
+The code of the JSON Editor is located in the folder `./src`. To build
 jsoneditor:
 
 - Install dependencies:
@@ -124,7 +128,7 @@ jsoneditor:
   npm run build
   ```
 
-  This will generate the files `./jsoneditor.js`, `./jsoneditor.css`, and  
+  This will generate the files `./jsoneditor.js`, `./jsoneditor.css`, and
   minified versions in the dist of the project.
 
 - To automatically build when a source file has changed:

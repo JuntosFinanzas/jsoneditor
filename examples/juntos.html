@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link href="../dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="../dist/jsoneditor.min.js"></script>
+
+    <script src="json_schema.js"></script>
+    <script src="https://bgrins.github.io/filereader.js/filereader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+</head>
+<body>
+    <div  style="width: 50%; margin: 0 auto">
+        <p>
+            Load a JSON document: <input type="file" id="loadDocument" value="Load"/>
+        </p>
+        <p>
+            Save a JSON document: <input type="button" id="saveDocument" value="Export" />
+        </p>
+        <p id="message"></p>
+        <div id="jsoneditor" style="height: 800px;"/>
+    </div>
+    <script>
+        window.onerror = function (msg, url, lineNo, columnNo, error) {
+            var string = msg.toLowerCase();
+            var substring = "script error";
+            if (string.indexOf(substring) > -1){
+                alert('Script Error: See Browser Console for Detail');
+            } else {
+                var message = [
+                    'Message: ' + msg,
+                    'URL: ' + url,
+                    'Line: ' + lineNo,
+                    'Column: ' + columnNo,
+                    'Error object: ' + JSON.stringify(error)
+                ].join(' - ');
+
+                alert(message);
+            }
+
+            return false;
+        };
+        var schema = {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Validation Schema ",
+            "description": "A schema to validate against partner data validation config file",
+            "type": "object",
+            "properties": {
+                "transformation_id": {
+                    "description": "The unique identifier for transformation",
+                    "type": "integer"
+                },
+                "rows" : {
+                    "type": "object",
+                    "properties": {
+                        "count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "exclusiveMinimum": false
+                        },
+                        "tolerance" :{
+                            "type": "number",
+                            "minimum": 0.0,
+                            "exclusiveMinimum": false,
+                            "maximum": 1.0,
+                            "exclusiveMaximum": false
+                        }
+                    }
+                },
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [ "Date", "Integer", "Decimal", "Category", "Time", "Boolean" ]
+                            },
+                            "format": {
+                                "type": "string"
+                            },
+                            "set": {
+                                "type": "array",
+                                "items" :{
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "required": ["name", "type"]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                }
+            },
+            "required": ["transformation_id", "columns"]
+        };
+        // create the editor
+        var container = document.getElementById("jsoneditor");
+        var options = {
+            mode: 'tree',
+            modes: ['code', 'form', 'text', 'tree', 'view'], // allowed modes
+            onError: function (err) {
+                alert(err.toString());
+            },
+            onModeChange: function (newMode, oldMode) {
+                console.log('Mode switched from', oldMode, 'to', newMode);
+            },
+            schema: schema
+        };
+        var editor = new JSONEditor(container, options);
+
+        // Load a JSON document
+        FileReaderJS.setupInput(document.getElementById('loadDocument'), {
+            readAsDefault: 'Text',
+            on: {
+              load: function (event, file) {
+                editor.setText(event.target.result);
+              }
+            }
+        });
+
+        document.getElementById('saveDocument').onclick = function () {
+            // Save Dialog
+            fname = window.prompt("Save as...");
+
+            // Check json extension in file name
+            if(fname.indexOf(".")==-1){
+              fname = fname + ".json";
+            } else {
+                if(fname.split('.').pop().toLowerCase() == "json"){
+                    // Nothing to do
+                }else{
+                    fname = fname.split('.')[0] + ".json";
+                }
+            }
+            var blob = new Blob([editor.getText()], {type: 'application/json;charset=utf-8'});
+            saveAs(blob, fname);
+        };
+        // get json
+        // var json = editor.get();
+    </script>
+</body>
+</html>
