@@ -78,7 +78,7 @@
                                 "type": "string"
                             },
                             "type": {
-                                "enum": [ "Date", "Integer", "Decimal", "Category", "Time", "Boolean" ]
+                                "enum": [ "Date", "Integer", "Decimal", "Category", "TimeStamp", "Boolean" ]
                             },
                             "format": {
                                 "type": "string"
@@ -111,7 +111,43 @@
             },
             schema: schema
         };
-        var editor = new JSONEditor(container, options);
+        var json = {
+            'transformation_id': 17,
+            'rows': {
+                'count': 20,
+                'tolerance': 0.1
+            },
+            'columns': [
+                {
+                    "name":"IntegerColumn",
+                    "type": "Integer"
+                },
+                {
+                    "name":"DecimalColummn",
+                    "type": "Decimal"
+                },
+                {
+                    "name":"DateColumn",
+                    "type": "Date",
+                    "format": "%d/%m/%y"
+                },
+                {
+                    "name":"TimeStampColumn",
+                    "type": "TimeStamp",
+                    "format": "%Y-%m-%d %H:%M:%S"
+                },
+                {
+                    "name":"BooleanColumn",
+                    "type": "Boolean"
+                },
+                {
+                    "name":"CategoryColumn",
+                    "type": "Category",
+                    "set": ["Option1", "Option2", "Option3"]
+                }
+            ]
+        };
+        var editor = new JSONEditor(container, options,json);
 
         // Load a JSON document
         FileReaderJS.setupInput(document.getElementById('loadDocument'), {
