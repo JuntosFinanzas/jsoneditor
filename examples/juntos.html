@@ -4,24 +4,39 @@
     <!-- when using the mode "code", it's important to specify charset utf-8 -->
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
+    <link rel="stylesheet" href="css/juntos.css">
     <link href="../dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
     <script src="../dist/jsoneditor.min.js"></script>
 
     <script src="json_schema.js"></script>
     <script src="https://bgrins.github.io/filereader.js/filereader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+
 </head>
 <body>
-    <div  style="width: 50%; margin: 0 auto">
-        <p>
-            Load a JSON document: <input type="file" id="loadDocument" value="Load"/>
-        </p>
-        <p>
-            Save a JSON document: <input type="button" id="saveDocument" value="Export" />
-        </p>
-        <p id="message"></p>
-        <div id="jsoneditor" style="height: 800px;"/>
+    <div id="page">
+        <div id="maincontent">
+            <div style="width: 50%; margin: 10px auto">
+                <p>
+                    Load a JSON document: <input type="file" id="loadDocument" value="Load"/>
+                </p>
+                <p>
+                    Save a JSON document: <input type="button" id="saveDocument" value="Export" />
+                </p>
+                <p id="message"></p>
+                <div id="jsoneditor" style="height: 800px;"/>
+            </div>
+        </div>
+        <div id="menuleftcontent">
+            <ul id="menu">
+                <li><a href="#firstcontent">first</a></li>
+                <li><a href="#secondcontent">second</a></li>
+            </ul>
+        </div>
+        <div id="clearingdiv"></div>
     </div>
+
+
     <script>
         window.onerror = function (msg, url, lineNo, columnNo, error) {
             var string = msg.toLowerCase();
@@ -112,40 +127,139 @@
             schema: schema
         };
         var json = {
-            'transformation_id': 17,
-            'rows': {
-                'count': 20,
-                'tolerance': 0.1
+          "transformation_id": 46,
+          "rows": {
+            "count": 1000,
+            "tolerance": 0.15
+          },
+          "columns": [
+            {
+              "name": "Phone Number",
+              "type": "String",
+              "nullable": false,
+              "space_allowed": true,
+              "strict": false
             },
-            'columns': [
-                {
-                    "name":"IntegerColumn",
-                    "type": "Integer"
-                },
-                {
-                    "name":"DecimalColummn",
-                    "type": "Decimal"
-                },
-                {
-                    "name":"DateColumn",
-                    "type": "Date",
-                    "format": "%d/%m/%y"
-                },
-                {
-                    "name":"DateColumnWithTime",
-                    "type": "Date",
-                    "format": "%Y-%m-%d %H:%M:%S"
-                },
-                {
-                    "name":"BooleanColumn",
-                    "type": "Boolean"
-                },
-                {
-                    "name":"CategoryColumn",
-                    "type": "Category",
-                    "set": ["Option1", "Option2", "Option3"]
-                }
-            ]
+            {
+              "name": "Status",
+              "type": "String"
+            },
+            {
+              "name": "Relationship",
+              "type": "Integer",
+              "nullable": true
+            },
+            {
+              "name": "Sub Product",
+              "type": "String"
+            },
+            {
+              "name": "Banking Relationship",
+              "type": "String"
+            },
+            {
+              "name": "Branch",
+              "type": "String"
+            },
+            {
+              "name": "Customer Number",
+              "type": "Integer"
+            },
+            {
+              "name": "Opening Date",
+              "type": "Date",
+              "format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+              "name": "Client Type",
+              "type": "Integer"
+            },
+            {
+              "name": "Opening Amount",
+              "type": "String"
+            },
+            {
+              "name": "Account Number",
+              "type": "String"
+            },
+            {
+              "name": "Currency",
+              "type": "Category",
+              "set": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            {
+              "name": "Zone ID",
+              "type": "Integer"
+            },
+            {
+              "name": "Active",
+              "type": "String"
+            },
+            {
+              "name": "Negative Rate",
+              "type": "Decimal"
+            },
+            {
+              "name": "Balance",
+              "type": "Decimal",
+              "min_value": -999999999999,
+              "max_value": 999999999999
+            },
+            {
+              "name": "Interest Rate",
+              "type": "Decimal"
+            },
+            {
+              "name": "Interest Date",
+              "type": "Date",
+              "format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+              "name": "Account Type",
+              "type": "String"
+            },
+            {
+              "name": "Principal",
+              "type": "Decimal"
+            },
+            {
+              "name": "Interest to Capitalize",
+              "type": "String"
+            },
+            {
+              "name": "Cheque",
+              "type": "Decimal"
+            },
+            {
+              "name": "Interest",
+              "type": "Decimal"
+            },
+            {
+              "name": "Interest Last",
+              "type": "Decimal"
+            },
+            {
+              "name": "Due Date",
+              "type": "Integer",
+              "strict": false
+            },
+            {
+              "name": "Product Type",
+              "type": "String"
+            },
+            {
+              "name": "Mobile Registration Status",
+              "type": "Category",
+              "set": [
+                "Not Registered",
+                "Registered"
+              ]
+            }
+          ]
         };
         var editor = new JSONEditor(container, options,json);
 

@@ -1,0 +1,18 @@
+#page {
+    margin-left: 100px;
+    margin-right:100px;
+}
+#maincontent {
+    float: center;
+    width: 100%;
+    background-color: #F0F0F0;
+}
+#menuleftcontent{
+    float: left;
+    width: 200px;
+    margin-left: -200px;
+    background-color: #CCCCCC;
+}
+#clearingdiv {
+    clear: both;
+}
